@@ -34,7 +34,7 @@
 			o.Albedo += c.rgb * IN.color.r;
 			o.Albedo += c2.rgb * IN.color.g;
 			o.Albedo += c3.rgb * IN.color.b; 
-			o.Albedo += c4.rgb*(1-IN.color.r + IN.color.g + IN.color.b);
+			o.Albedo += c4.rgb - c4.rgb *(IN.color.r + IN.color.g + IN.color.b);
 
 		}
 		ENDCG
