@@ -45,8 +45,8 @@
 			o.Albedo = lerp(o.Albedo, c4.rgb, IN.color.b);
 			o.Alpha = c.a;
 			o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_MainTex));
-			o.Metallic = _Metallic;
-			o.Smoothness = _Smoothness;
+			o.Metallic = _Metallic * IN.color.b;
+			o.Smoothness = _Smoothness * IN.color.b;
 		}
 		ENDCG
 	}
