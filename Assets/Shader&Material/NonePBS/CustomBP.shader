@@ -3,7 +3,7 @@
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_NormalMap("NormalMap", 2D) = "bump" {}
 		_GlossMap("GlossMap", 2D) = "white" {}
-		_SpecularColor("Specular Color", color) = (1,1,1,1)
+		_RimColor("Rim Color", color) = (1,1,1,1)
 		_Specular("Specular",Range(1,100)) = 100
 	}
 	SubShader {
@@ -11,14 +11,14 @@
 		LOD 200
 
 		CGPROGRAM
-		#pragma surface surf BP noambient
+		#pragma surface surf BP
 
 		#pragma target 3.0
 
 		sampler2D _MainTex;
 		sampler2D _NormalMap;
 		sampler2D _GlossMap;
-		fixed4 _SpecularColor;
+		fixed4 _RimColor;
 		float _Specular;
 
 		struct Input {
@@ -45,7 +45,12 @@
 			//Specular
 			float H = normalize(viewDir+lightDir);
 			float spec = pow(dot(H, s.Normal) * 0.5 + 0.5,_Specular) * s.Gloss;
-			s.Albedo += (_SpecularColor * spec);
+			s.Albedo += (s.Albedo * _LightColor0.rgb * spec);
+
+			//Rim
+			float rim = dot(viewDir, s.Normal) * 0.5 + 0.5;
+			rim = 1 - rim;
+			s.Albedo += pow(rim, 4) * _RimColor;
 
 			return float4(s.Albedo, s.Alpha);
 		}
