@@ -1,4 +1,4 @@
-﻿Shader "Custom/BasicWarp" {
+﻿Shader "Zintaho/BasicWarp" {
 	Properties{
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_NormalMap("Normal Map",2D) = "bump" {}
