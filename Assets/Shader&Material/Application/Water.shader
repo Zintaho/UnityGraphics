@@ -10,13 +10,18 @@
 		Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
 
 		CGPROGRAM
-		#pragma surface surf WaterSpecular alpha:fade
+		#pragma surface surf WaterSpecular vertex:vert alpha:fade
 	
 		samplerCUBE _Cube;
 		sampler2D _BumpMap;
 		float4 _SPColor;
 		float _SPPower;
 		float _SPMulti;
+
+		void vert(inout appdata_full v)
+		{
+				v.vertex.y += sin(6*abs(v.texcoord.y*2-1)+_Time.y)*0.35;
+		}
 
 		struct Input {
 			float2 uv_BumpMap;
@@ -49,7 +54,7 @@
 			//final
 			float4 finalColor;
 			finalColor.rgb = spec * _SPColor.rgb * _SPMulti;
-			finalColor.a = s.Alpha + spec;
+			finalColor.a = s.Alpha*0.3 + spec;
 
 			return finalColor;
 		}
