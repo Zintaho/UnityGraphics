@@ -33,10 +33,20 @@ public class OnscreenRay : MonoBehaviour
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit))
         {
-            if (hit.transform.gameObject.tag == "Ground")
+            var TAG = hit.transform.gameObject.tag;
+            switch (TAG)
             {
-                hitPosition = hit.point;
-                EventManager.TriggerEvent(MOVE);
+                case "Ground":
+                    {
+                        hitPosition = hit.point;
+                        EventManager.TriggerEvent(MOVE);
+                        break;
+                    }
+                case "Enemy":
+                    {
+                        Debug.Log("Enemy");
+                        break;
+                    }
             }
         }
     }
