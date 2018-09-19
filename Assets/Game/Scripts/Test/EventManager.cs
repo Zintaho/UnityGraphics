@@ -3,7 +3,9 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
-//https://unity3d.com/kr/learn/tutorials/topics/scripting/events-creating-simple-messaging-system
+/* 참고 
+    https://unity3d.com/kr/learn/tutorials/topics/scripting/events-creating-simple-messaging-system
+ */
 
 public class EventManager : MonoBehaviour
 {
@@ -36,6 +38,8 @@ public class EventManager : MonoBehaviour
     {
         ON_SCREEN_RAY = 1001,
         MOVE = 2001,
+        ENEMY_TARGETED = 3001,
+        ENEMY_TARGETED_UI = 3101,
     }
     private Dictionary<CustomEventType, UnityEvent> eventDictionary;
 

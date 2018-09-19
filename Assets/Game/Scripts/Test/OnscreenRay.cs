@@ -9,6 +9,8 @@ using static EventManager.CustomEventType;
 
 public class OnscreenRay : MonoBehaviour
 {
+    public static GameObject hitObject;
+    public static string hitName;
     public static Vector3 hitPosition;
 
     #region Event & Awake
@@ -33,18 +35,21 @@ public class OnscreenRay : MonoBehaviour
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit))
         {
-            var TAG = hit.transform.gameObject.tag;
+            hitObject = hit.transform.gameObject;
+            hitName = hitObject.name;
+            hitPosition = hit.point;
+
+            var TAG = hitObject.tag;
             switch (TAG)
             {
                 case "Ground":
                     {
-                        hitPosition = hit.point;
                         EventManager.TriggerEvent(MOVE);
                         break;
                     }
                 case "Enemy":
                     {
-                        Debug.Log("Enemy");
+                        EventManager.TriggerEvent(ENEMY_TARGETED);
                         break;
                     }
             }
