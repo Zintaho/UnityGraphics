@@ -5,7 +5,7 @@ using UnityEngine;
 using static EnemyManager;
 #endregion
 
-public class Enemy : MonoBehaviour
+public class EnemyData
 {
     private EnemyCode code;
     private string enemyName;
@@ -46,6 +46,7 @@ public class Enemy : MonoBehaviour
         set
         {
             maxHP = value;
+            curHP = maxHP;
         }
     }
 
@@ -54,10 +55,6 @@ public class Enemy : MonoBehaviour
         get
         {
             return curHP;
-        }
-        set
-        {
-            curHP = value;
         }
     }
     #endregion

@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator MoveRoutine(Vector3 source, Vector3 dest, float distance)
     {
+        GetComponent<Animator>().SetBool("isRunning",true);
         float step = (MovSpd / distance) * Time.fixedDeltaTime;
         float t = 0;
         while (t <= 1.0f)
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         transform.position = dest;
+        GetComponent<Animator>().SetBool("isRunning", false);
     }
     private void Move()
     {
@@ -62,7 +64,11 @@ public class Player : MonoBehaviour
     }
     private void Target()
     {
+        Vector3 source = transform.position;
+        Vector3 dest = OnscreenRay.hitPosition;
+        Vector3 movVec = dest - source;
 
+        transform.rotation = Quaternion.LookRotation(movVec);
     }
     #endregion
 }

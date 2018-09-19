@@ -19,11 +19,11 @@ public class EnemyManager : MonoBehaviour
         FOX = 1004,
     }
 
-    private static readonly Enemy[] enemies = {
-        new Enemy(EnemyCode.RACOON, "너구리", 100),
-        new Enemy(EnemyCode.DOG, "강아지", 150),
-        new Enemy(EnemyCode.BEAR, "새끼 곰", 200),
-        new Enemy(EnemyCode.FOX, "여우", 125),
+    private static readonly EnemyData[] enemies = {
+        new EnemyData() {Code=EnemyCode.RACOON,Name="너구리",MaxHP=100},
+        new EnemyData() {Code=EnemyCode.DOG,Name="강아지",MaxHP=150},
+        new EnemyData() {Code=EnemyCode.BEAR,Name="새끼 곰",MaxHP=200},
+        new EnemyData() {Code=EnemyCode.FOX,Name="여우",MaxHP=125},
     };
 
     #region Event & Awake
@@ -44,28 +44,24 @@ public class EnemyManager : MonoBehaviour
     private void Target()
     {
         GameObject obj = OnscreenRay.hitObject;
-        Enemy enemy;
-        if (!(enemy = obj.GetComponent<Enemy>()))
-        {
-            ///Enemy Component가 없는 경우 추가 (CurHP 때문에)
-            obj.AddComponent<Enemy>();
+        Enemy enemy = obj.GetComponent<Enemy>();
 
-            string[] splitedName = OnscreenRay.hitName.Split('_');
-            int code = Convert.ToInt32(splitedName[1]);
-            #region V3.0
-            //LINQ가 불필요한 상황이나, 사용할 수 있음을 나타내기 위해 사용하였음
-            //추후 Enemy 도감 기능 추가시 아래 내용을 Find<>로 변경할 것
-            var queriedEnemies = from element in enemies
-                                 where element.Code == (EnemyCode)code
-                                 select element;
-            #endregion
-            enemy = queriedEnemies.First();
+        string[] splitedName = OnscreenRay.hitName.Split('_');
+        int code = Convert.ToInt32(splitedName[1]);
+        #region V3.0
+        //LINQ가 불필요한 상황이나, 사용할 수 있음을 나타내기 위해 사용하였음
+        //추후 Enemy 도감 기능 추가시 아래 내용을 Find<>로 변경할 것
+        var queriedEnemies = from element in enemies
+                             where element.Code == (EnemyCode)code
+                             select element;
+        #endregion
+        EnemyData qEnemy = queriedEnemies.First();
 
-            obj.GetComponent<Enemy>().Code = enemy.Code;
-            obj.GetComponent<Enemy>().Name = enemy.Name;
-            obj.GetComponent<Enemy>().CurHP = enemy.CurHP;
-            obj.GetComponent<Enemy>().MaxHP = enemy.MaxHP;
-        }
+        enemy.Code = qEnemy.Code;
+        enemy.Name = qEnemy.Name;
+        enemy.CurHP = qEnemy.CurHP;
+        enemy.MaxHP = qEnemy.MaxHP;
+
         EventManager.TriggerEvent(ENEMY_TARGETED_UI);
     }
     #endregion
