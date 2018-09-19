@@ -50,35 +50,34 @@ public class EventManager : MonoBehaviour
     public static void StartListening(CustomEventType eventType, UnityAction listener)
     {
         UnityEvent thisEvent = null;
-        if (Instance.eventDictionary.TryGetValue(eventType, out thisEvent))
-        {
-            thisEvent.AddListener(listener);
-        }
-        else
+        if (! Instance.eventDictionary.TryGetValue(eventType, out thisEvent))
         {
             thisEvent = new UnityEvent();
-            thisEvent.AddListener(listener);
             Instance.eventDictionary.Add(eventType, thisEvent);
         }
+        #region V6.0
+        thisEvent?.AddListener(listener);
+        #endregion
     }
 
     public static void StopListening(CustomEventType eventType, UnityAction listener)
     {
         if (eventManager == null) return;
+
         UnityEvent thisEvent = null;
-        if (Instance.eventDictionary.TryGetValue(eventType, out thisEvent))
-        {
-            thisEvent.RemoveListener(listener);
-        }
+        Instance.eventDictionary.TryGetValue(eventType, out thisEvent);
+        #region V6.0
+        thisEvent?.RemoveListener(listener);
+        #endregion
     }
 
     public static void TriggerEvent(CustomEventType eventType)
     {
         UnityEvent thisEvent = null;
-        if (Instance.eventDictionary.TryGetValue(eventType, out thisEvent))
-        {
-            thisEvent.Invoke();
-        }
+        Instance.eventDictionary.TryGetValue(eventType, out thisEvent);
+        #region V6.0
+        thisEvent?.Invoke();
+        #endregion
     }
 }
 
