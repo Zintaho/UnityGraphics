@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+#region V6.0
+using static EventManager.CustomEventType;
+#endregion
+
 public class Player : MonoBehaviour
 {
-    #region Event & Awake
+#region Event & Awake
     private UnityAction moveAction;
     private void Awake()
     {
@@ -13,11 +17,11 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening(EventManager.CustomEventType.Move, moveAction);
+        EventManager.StartListening(MOVE, moveAction);
     }
     private void OnDisable()
     {
-        EventManager.StopListening(EventManager.CustomEventType.Move, moveAction);
+        EventManager.StopListening(MOVE, moveAction);
     }
 
     private void Move()
@@ -26,5 +30,5 @@ public class Player : MonoBehaviour
 
         transform.position = dest;
     }
-    #endregion
+#endregion
 }

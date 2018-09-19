@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+#region V6.0
+using static EventManager.CustomEventType;
+#endregion
+
 public class OnscreenRay : MonoBehaviour
 {
     public static Vector3 hitPosition;
@@ -15,11 +19,11 @@ public class OnscreenRay : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening(EventManager.CustomEventType.OnscreenRay, rayAction);
+        EventManager.StartListening(ON_SCREEN_RAY, rayAction);
     }
     private void OnDisable()
     {
-        EventManager.StopListening(EventManager.CustomEventType.OnscreenRay, rayAction);
+        EventManager.StopListening(ON_SCREEN_RAY, rayAction);
     }
 
     private void RayAction()
@@ -32,7 +36,7 @@ public class OnscreenRay : MonoBehaviour
             if (hit.transform.gameObject.tag == "Ground")
             {
                 hitPosition = hit.point;
-                EventManager.TriggerEvent(EventManager.CustomEventType.Move);
+                EventManager.TriggerEvent(MOVE);
             }
         }
     }
@@ -43,7 +47,7 @@ public class OnscreenRay : MonoBehaviour
     {
         if(Input.GetMouseButtonUp(0))
         {
-            EventManager.TriggerEvent(EventManager.CustomEventType.OnscreenRay);
+            EventManager.TriggerEvent(ON_SCREEN_RAY);
         }
     }
 

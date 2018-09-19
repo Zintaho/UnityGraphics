@@ -34,8 +34,8 @@ public class EventManager : MonoBehaviour
 
     public enum CustomEventType
     {
-        OnscreenRay = 1001,
-        Move = 2001,
+        ON_SCREEN_RAY = 1001,
+        MOVE = 2001,
     }
     private Dictionary<CustomEventType, UnityEvent> eventDictionary;
 
