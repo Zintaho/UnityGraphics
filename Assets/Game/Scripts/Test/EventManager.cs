@@ -41,7 +41,13 @@ public class EventManager : MonoBehaviour
         ENEMY_TARGETED = 3001,
         ENEMY_TARGETED_UI = 3101,
     }
-    private Dictionary<CustomEventType, UnityEvent> eventDictionary;
+    private Dictionary<CustomEventType, UnityEvent> eventDictionary
+    #region V6.0
+        = new Dictionary<CustomEventType, UnityEvent>()
+        {
+            [CustomEventType.ON_SCREEN_RAY] = new UnityEvent()
+        };
+    #endregion
 
     void Init()
     {
